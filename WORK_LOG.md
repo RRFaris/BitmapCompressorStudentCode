@@ -1,9 +1,9 @@
 Name: YOUR NAME HERE
 
-| Date    |  Time  |                                     Update |
-|:--------|:------:|-------------------------------------------:|
-| April 5 | 9-10pm | I tried to write abstract, efficient code. |
-|         |        |                                            |
+| Date        |    Time     |                                                                                                                                                                                                                                                                                                                                                             Update |
+|:------------|:-----------:|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
+| November 25 | 7:30-8:00pm |  I started by cloning the repository and looking at the compress method. I realized that what I wanted to do was have a for loop to go through the entire file, and count the number of 0s/1s are repeated. Once there is a switch in which number it is, I would stop the while loop and write that number down. Then, I would repeat until the file is finished. |
+|             |             |                                                                                                                                                                                                                                                                                                                                                                    |
 
 
 To add a new row to the table, click into a cell and then hit shift-enter.

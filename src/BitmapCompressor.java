@@ -23,17 +23,32 @@
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  *  @author Zach Blick
- *  @author YOUR NAME HERE
+ *  @author Ryan
  */
 public class BitmapCompressor {
+
+    public static final int BITS_PER_NUMBER = 5;
+    public static final int BITS_PER_INT = 32;
 
     /**
      * Reads a sequence of bits from standard input, compresses them,
      * and writes the results to standard output.
      */
     public static void compress() {
+        String str = BinaryStdIn.readString();
+        int strLength = str.length();
 
-        // TODO: complete compress()
+        int count = 0;
+
+        BinaryStdOut.write(strLength, BITS_PER_INT);
+
+        for (int i = 0; i < strLength; i++) {
+            while (str.charAt(i) != str.charAt(i+1)) {
+                count++;
+            }
+            BinaryStdOut.write(count, BITS_PER_NUMBER);
+            i += count;
+        }
 
         BinaryStdOut.close();
     }
@@ -43,9 +58,17 @@ public class BitmapCompressor {
      * and writes the results to standard output.
      */
     public static void expand() {
+        int length = BinaryStdIn.readInt();
 
-        // TODO: complete expand()
-
+        for (int i = 0; i < length; i++) {
+            int numRepetitions = BinaryStdIn.readInt(BITS_PER_NUMBER);
+            for (int j = 0; i < numRepetitions; j++) {
+                if (i % 2 == 0)
+                    BinaryStdOut.write(0);
+                else
+                    BinaryStdOut.write(1);
+            }
+        }
         BinaryStdOut.close();
     }
 
