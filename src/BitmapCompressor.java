@@ -26,30 +26,35 @@
  *  @author Ryan
  */
 public class BitmapCompressor {
-
-    public static final int BITS_PER_NUMBER = 5;
-    public static final int BITS_PER_INT = 32;
+    public static final int BITS_PER_INT = 8;
 
     /**
      * Reads a sequence of bits from standard input, compresses them,
      * and writes the results to standard output.
      */
     public static void compress() {
-        String str = BinaryStdIn.readString();
-        int strLength = str.length();
+        int count = 1;
 
-        int count = 0;
+        int previousBit = BinaryStdIn.readInt(1);
 
-        BinaryStdOut.write(strLength, BITS_PER_INT);
+        while (!BinaryStdIn.isEmpty()) {
+            int bit = BinaryStdIn.readInt(1);
 
-        for (int i = 0; i < strLength; i++) {
-            while (str.charAt(i) != str.charAt(i+1)) {
+            if (previousBit == bit && count < 255) {
                 count++;
             }
-            BinaryStdOut.write(count, BITS_PER_NUMBER);
-            i += count;
+            else if (count >= 255) {
+                BinaryStdOut.write(count, BITS_PER_INT);
+                BinaryStdOut.write(0, BITS_PER_INT);
+                count = 1;
+            }
+            else {
+                BinaryStdOut.write(count, BITS_PER_INT);
+                previousBit = bit;
+                count = 1;
+            }
         }
-
+        BinaryStdOut.write(count, BITS_PER_INT);
         BinaryStdOut.close();
     }
 
@@ -58,16 +63,18 @@ public class BitmapCompressor {
      * and writes the results to standard output.
      */
     public static void expand() {
-        int length = BinaryStdIn.readInt();
+        boolean even = true;
 
-        for (int i = 0; i < length; i++) {
-            int numRepetitions = BinaryStdIn.readInt(BITS_PER_NUMBER);
-            for (int j = 0; i < numRepetitions; j++) {
-                if (i % 2 == 0)
-                    BinaryStdOut.write(0);
-                else
-                    BinaryStdOut.write(1);
+        while (!BinaryStdIn.isEmpty()) {
+            int numRepetitions = BinaryStdIn.readInt(BITS_PER_INT);
+            for (int i = 0; i < numRepetitions; i++) {
+                if (even) {
+                    BinaryStdOut.write(0, 1);
+                } else {
+                    BinaryStdOut.write(1,1);
+                }
             }
+            even = !even;
         }
         BinaryStdOut.close();
     }
